@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gyroscope Check</title>
+</head>
+<body>
+  <h1>Gyroscope Check</h1>
+  <p id="gyro-status">Checking gyroscope...</p>
+
+  <script>
+    if ('DeviceOrientationEvent' in window) {
+      window.addEventListener('deviceorientation', function(event) {
+        if (event.alpha || event.beta || event.gamma) {
+          document.getElementById('gyro-status').innerText = 'Gyroscope is working!';
+        } else {
+          document.getElementById('gyro-status').innerText = 'No gyroscope data available.';
+        }
+      });
+    } else {
+      document.getElementById('gyro-status').innerText = 'Device does not support gyroscope.';
+    }
+  </script>
+</body>
+</html>
