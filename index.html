@@ -1,65 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gyroscope Check</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/detectizr/2.2.0/detectizr.min.js"></script>
-  <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      text-align: center;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-      background-color: #3498db;
-      color: #fff;
-      transition: background-color 0.5s ease-in-out;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gyroscope Check</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/detectizr/2.2.0/detectizr.min.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #3498db;
+            color: #fff;
+            transition: background-color 0.5s ease-in-out;
+        }
 
-    h1 {
-      font-size: 2em;
-      margin-bottom: 20px;
-    }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
 
-    #gyro-status {
-      font-size: 24px;
-      margin-top: 20px;
-      opacity: 0.7;
-      transition: opacity 0.5s ease-in-out;
-    }
+        #gyro-status {
+            font-size: 24px;
+            margin-top: 20px;
+            opacity: 0.7;
+            transition: opacity 0.5s ease-in-out;
+        }
 
-    #gyro-status.working {
-      opacity: 1;
-    }
+        #gyro-status.working {
+            opacity: 1;
+        }
 
-    #gyro-status.not-working {
-      opacity: 1;
-    }
-  </style>
+        #gyro-status.not-working {
+            opacity: 1;
+        }
+    </style>
 </head>
+
 <body>
-  <div>
-    <h1>Gyroscope Check</h1>
-    <p id="gyro-status">Checking gyroscope...</p>
-  </div>
+    <div>
+        <h1>Gyroscope Check 2.0</h1>
+        <p id="gyro-status">Checking gyroscope...</p>
+    </div>
 
-  <script>
-    setTimeout(function() {
-      const gyroStatusElement = document.getElementById('gyro-status');
+    <script>
+        var gyroPresent = false;
 
-      if (Detectizr.device && Detectizr.device.sensors && Detectizr.device.sensors.gyroscope) {
-        gyroStatusElement.innerText = 'Your device supports the gyroscope feature.';
-        gyroStatusElement.className = 'working';
-        document.body.style.backgroundColor = '#2ecc71'; // Green background for success
-      } else {
-        gyroStatusElement.innerText = 'Your device does not support the gyroscope feature.';
-        gyroStatusElement.className = 'not-working';
-        document.body.style.backgroundColor = '#e74c3c'; // Red background for failure
-      }
-    }, 5000);
-  </script>
+        window.addEventListener("devicemotion", function (event) {
+            if (event.rotationRate.alpha || event.rotationRate.beta || event.rotationRate.gamma)
+                gyroPresent = true;
+        });
+
+        setTimeout(function () {
+            const gyroStatusElement = document.getElementById('gyro-status');
+
+            if (gyroPresent) {
+                gyroStatusElement.innerText = 'Your device supports the gyroscope feature.';
+                gyroStatusElement.className = 'working';
+                document.body.style.backgroundColor = '#2ecc71'; // Green background for success
+            } else {
+                gyroStatusElement.innerText = 'Your device does not support the gyroscope feature.';
+                gyroStatusElement.className = 'not-working';
+                document.body.style.backgroundColor = '#e74c3c'; // Red background for failure
+            }
+        }, 5000);
+    </script>
 </body>
+
 </html>
